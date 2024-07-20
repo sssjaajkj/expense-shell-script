@@ -15,7 +15,7 @@ N="\e[0m"
 VALIDATE(){
         if [ $1 -ne 0 ]
         then 
-            echo -e "$2.... $R Failur $N"
+            echo -e "$2.... $R Failre $N"
             exit
         else
                 echo -e "$2.... $G Success $N"
@@ -44,10 +44,10 @@ if [ $USERID -ne 0 ]
 useradd expense &>>$LOGFILE
 VALIDATE $? "creating expense user" 
 
-id expense -y &>>$LOGFILE
+id expense  &>>$LOGFILE
 if [ $? -ne 0 ]
 then
-    useradd expense -y &>>$LOGFILE
+    useradd expense  &>>$LOGFILE
     VALIDATE $? "Creating expense user"
  else
   echo -e "Expense user already created ..... $Y SKIPPING $N"
