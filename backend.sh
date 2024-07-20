@@ -77,7 +77,7 @@ VALIDATE $? "Installing nodejs dependence..............."
 #create backend.service file
 #D:\devops\dwas-78sec\repos\backend.service
 
-cp  /home/ec2-user/expense-shell/backend.service /etc/systemd/system/backend.service &>>$LOGFILE
+cp  /home/ec2-user/expense-shell-script/backend.service /etc/systemd/system/backend.service &>>$LOGFILE
 VALIDATE $? "copied backend service.."
 
 
