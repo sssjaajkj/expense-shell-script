@@ -45,7 +45,19 @@ if [ $USERID -ne 0 ]
         VALIDATE $? "start of mysql server"
 
         
-        mysql_secure_installation --set-root-pass ExpenseApp@1
-        VALIDATE $? "SETTING-UP ROOT PASSWORD"
+        # mysql_secure_installation --set-root-pass ExpenseApp@1
+        # VALIDATE $? "SETTING-UP ROOT PASSWORD"
 
+        #Below code will be useful for "idempotent" nature
+        mysql -h db.aws79s.online -uroot -pExpenseApp@1 -e 'SHOW DATABASES;'  &>>LOGFILE
+        if [ $? -ne 0]
+        then 
+
+            mysql_secure_installation  --set-root-pass  ExpenseApp@1
+            VALIDATE $?  "Mysql Root password Setup"
+         else
+
+         echo -e "MYSQL Root passord is already setup ...$Y Skipping $N"
+
+fi
 
