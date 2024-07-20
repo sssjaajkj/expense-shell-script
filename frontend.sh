@@ -46,8 +46,6 @@ unzip /tmp/frontend.zip
 VALIDATE $? "Extracting frontend code"
 
 #checking your repo and path
-
-
 cp  /home/ec2-user/expense-shell-script/expense.conf /etc/nginx/default.d/expense.conf
 VALIDATE $? "copied frontend service.."
 
