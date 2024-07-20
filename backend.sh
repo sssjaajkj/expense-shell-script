@@ -44,7 +44,7 @@ if [ $USERID -ne 0 ]
 useradd expense &>>$LOGFILE
 VALIDATE $? "creating expense user" 
 
-id expense  &>>$LOGFILE
+id expense &>>$LOGFILE
 if [ $? -ne 0 ]
 then
     useradd expense  &>>$LOGFILE
