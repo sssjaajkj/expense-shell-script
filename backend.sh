@@ -54,3 +54,44 @@ then
 fi
 
 
+# mkdir -p /app if dir pesent ingone otherwise creating
+
+mkdir -p /app &>>$LOGFILE
+VALIDATE $? "Creating app directory"
+
+curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+VALIDATE &? "Downloading backend code"
+
+cd /app &>>$LOGFILE
+
+unzip /tmp/backend.zip &>>$LOGFILE
+VALIDATE $? "Extracted backend code........."
+
+npm install &>>$LOGFILE
+VALIDATE $? "Installing nodejs dependence..............."
+
+#vim /etc/systemd/system/backend.service not for script
+#create backend.service file
+
+cp  /home/ec2-user/expense-shell/backend.service /etc/systemd/system/backend.service &>>$LOGFILE
+VALIDATE $? "copied backend service.."
+
+
+systemctl daemon-reload &>>$LOGFILE
+VALIDATE $? " daemon-reload"
+
+systemctl start backend &>>$LOGFILE
+VALIDATE $? "Starting backend "
+systemctl enable backend &>>$LOGFILE
+VALIDATE $? "enable  backend"
+
+dnf install mysql -y &>>$LOGFILE
+VALIDATE $? "Installing mysql"
+
+mysql -h db.aws79s.online -uroot -p${mysql_root_password} < /app/schema/backend.sql &>>$LOGFILE
+VALIDATE $? "Schema loading..."
+
+systemctl restart backend &>>$LOGFILE
+VALIDATE $? "Restaring backend"
+
+
