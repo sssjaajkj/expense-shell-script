@@ -87,10 +87,10 @@ VALIDATE $? "Starting backend "
 systemctl enable backend &>>$LOGFILE
 VALIDATE $? "enable  backend"
 
-dnf install mysql -y &>>$LOGFILE
-VALIDATE $? "Installing mysql"
+dnf install mysql -y
+VALIDATE $? "Installing mysql-clienr "
 
-mysql -h db.aws79s.online -uroot -p${mysql_root_password} < /app/schema/backend.sql &>>$LOGFILE
+mysql -h db.aws79s.online -uroot -p${mysql_root_password} < /app/schema/backend.sql
 VALIDATE $? "Schema loading..."
 
 systemctl restart backend &>>$LOGFILE
