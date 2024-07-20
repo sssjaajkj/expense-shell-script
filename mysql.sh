@@ -50,8 +50,7 @@ if [ $USERID -ne 0 ]
         # VALIDATE $? "SETTING-UP ROOT PASSWORD"
 
         #Below code will be useful for "idempotent" nature
-        
-         mysql -h db.aws79s.online -uroot -p${mysql_root_password} -e 'SHOW DATABASES;'  &>>LOGFILE
+        mysql -h db.aws79s.online -uroot -p${mysql_root_password} -e 'SHOW DATABASES;'  &>>LOGFILE
        # mysql -h db.aws79s.online -uroot -pExpenseApp@1 -e 'SHOW DATABASES;'  &>>LOGFILE
         if [ $? -ne 0]
         then 
