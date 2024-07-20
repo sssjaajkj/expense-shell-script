@@ -4,7 +4,8 @@ USERID=$(id -u)
 TIMESTAM=$(date +%F-+%H-%M-%-%S)
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOGFILE=/tmp/$SCRIPT_NAME-$TIMESTAM.log
-
+echo "Please enter db password...."
+read -s mysql_root_password
 #colors 
 R="\e[31m"
 G="\e[32m"
@@ -49,11 +50,13 @@ if [ $USERID -ne 0 ]
         # VALIDATE $? "SETTING-UP ROOT PASSWORD"
 
         #Below code will be useful for "idempotent" nature
-        mysql -h db.aws79s.online -uroot -pExpenseApp@1 -e 'SHOW DATABASES;'  &>>LOGFILE
+        
+         mysql -h db.aws79s.online -uroot -p${mysql_root_password} -e 'SHOW DATABASES;'  &>>LOGFILE
+       # mysql -h db.aws79s.online -uroot -pExpenseApp@1 -e 'SHOW DATABASES;'  &>>LOGFILE
         if [ $? -ne 0]
         then 
 
-            mysql_secure_installation  --set-root-pass  ExpenseApp@1
+            mysql_secure_installation  --set-root-pass  ${mysql_root_password} &>>LOGFILE
             VALIDATE $?  "Mysql Root password Setup"
          else
 
